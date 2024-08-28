@@ -7,31 +7,22 @@ export const getAllContacts = async () => {
 };
 
 export const getContactById = async (contactId) => {
-  try {
-    if (!mongoose.Types.ObjectId.isValid(contactId)) {
-      return null; // Повертаємо null, якщо ID невалідний
-    }
-    const contact = await ContactCollection.findById(contactId).lean();
-    return contact;
-  } catch (error) {
-    console.error('Error in getContactById:', error);
-    throw error;
+  if (!mongoose.Types.ObjectId.isValid(contactId)) {
+    return null;
   }
+  const contact = await ContactCollection.findById(contactId).lean();
+  return contact;
 };
 export const createContact = async (payload) => {
-  try {
-    const contact = await ContactCollection.create(payload);
-    return contact;
-  } catch (error) {}
+  const contact = await ContactCollection.create(payload);
+  return contact;
 };
 
 export const deleteContact = async (contactId) => {
-  try {
-    const contact = await ContactCollection.findOneAndDelete({
-      _id: contactId,
-    });
-    return contact;
-  } catch (error) {}
+  const contact = await ContactCollection.findOneAndDelete({
+    _id: contactId,
+  });
+  return contact;
 };
 export const updateContact = async (contactId, payload, options = {}) => {
   const rawResult = await ContactCollection.findOneAndUpdate(
