@@ -20,7 +20,9 @@ export const getAllContacts = async ({
   if (typeof filter.isFavourite === 'boolean') {
     contactQuery.where('isFavourite').equals(filter.isFavourite);
   }
-
+  if (typeof filter.userId) {
+    contactQuery.where('userId').eq(filter.userId);
+  }
   const contactCount = await ContactCollection.find()
     .merge(contactQuery)
     .countDocuments();
@@ -38,22 +40,21 @@ export const getAllContacts = async ({
     ...paginationData,
   };
 };
-export const getContactById = async (contactId) => {
-  if (!mongoose.Types.ObjectId.isValid(contactId)) {
-    return null;
-  }
-  const contact = await ContactCollection.findById(contactId).lean();
+export const getContactById = async (filter) => {
+  // if (!mongoose.Types.ObjectId.isValid(filter.contactId)) {
+  //   return null;
+  // }
+  const contact = await ContactCollection.findOne(filter).lean();
   return contact;
 };
+
 export const createContact = async (payload) => {
   const contact = await ContactCollection.create(payload);
   return contact;
 };
 
-export const deleteContact = async (contactId) => {
-  const contact = await ContactCollection.findOneAndDelete({
-    _id: contactId,
-  });
+export const deleteContact = async (filter) => {
+  const contact = await ContactCollection.findOneAndDelete(filter);
   return contact;
 };
 export const updateContact = async (contactId, payload, options = {}) => {

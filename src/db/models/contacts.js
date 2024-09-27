@@ -12,8 +12,11 @@ const contactSchema = new Schema(
       required: true,
       default: 'personal',
     },
-
-    parentId: { type: Schema.Types.ObjectId, ref: 'users' },
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   {
     timestamps: true,
