@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { ContactCollection } from '../db/models/contacts.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { SORT_ORDER } from '../constants/index.js';
@@ -57,18 +56,13 @@ export const deleteContact = async (filter) => {
   const contact = await ContactCollection.findOneAndDelete(filter);
   return contact;
 };
-export const updateContact = async (contactId, payload, options = {}) => {
-  const rawResult = await ContactCollection.findOneAndUpdate(
-    {
-      _id: contactId,
-    },
-    payload,
-    {
-      new: true,
-      includeResultMetadata: true,
-      ...options,
-    },
-  );
+
+export const updateContact = async (filter, payload, options = {}) => {
+  const rawResult = await ContactCollection.findOneAndUpdate(filter, payload, {
+    new: true,
+    includeResultMetadata: true,
+    ...options,
+  });
   if (!rawResult || !rawResult.value) return null;
   return {
     contact: rawResult.value,
