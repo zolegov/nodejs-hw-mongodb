@@ -1,0 +1,79 @@
+tags:
+  - Contacts
+summary: Update contact
+operationId: updateContact
+description: 'Update an existing contact by ID'
+security:
+  - bearerAuth: []
+parameters:
+  - name: id
+    in: path
+    required: true
+    description: The ID of the contact to update
+    schema:
+      type: string
+requestBody:
+  content:
+    multipart/form-data:
+      schema:
+        type: object
+        required:
+          - name
+          - phoneNumber
+          - email
+          - contactType
+        properties:
+          name:
+            description: 'Contact name'
+            type: string
+            example: 'John Doe'
+          phoneNumber:
+            description: 'Contact phoneNumber'
+            type: string
+            example: '123456789'
+          email:
+            description: 'Contact email'
+            type: string
+            example: 'example@gmail.com'
+          isFavourite:
+            description: 'Contact favourite'
+            type: boolean
+            example: false
+          contactType:
+            description: 'Contact type'
+            type: string
+            enum: ['work', 'home', 'personal']
+            example: 'work'
+          photo:
+            description: 'Contact photo'
+            type: string
+            format: binary
+responses:
+  '200':
+    description: Successfully updated contact
+    content:
+      application/json:
+        schema:
+          type: object
+          required:
+            - status
+            - message
+            - data
+          properties:
+            status:
+              type: integer
+              example: 200
+            message:
+              type: string
+              example: Successfully updated the contact!
+            data:
+              type: object
+              $ref: ../../../components/schemas/contact.yaml
+  '400':
+    description: Bad request, missing required fields
+  '401':
+    $ref: ../../../components/responses/401.yaml
+  '404':
+    description: Contact not found
+  '500':
+    description: Internal server error

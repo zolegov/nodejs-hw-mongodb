@@ -16,22 +16,22 @@ properties:
     description: 'Contacts name'
     type: string
     example: 'John Doe'
-  age:
-    description: 'Contacts age'
+  phoneNumber:
+    description: 'Contacts phoneNumber'
     type: number
-    example: 12
-  gender:
-    description: 'Contacts age'
+    example: +380501111111
+  email:
+    description: 'Contacts email'
     type: string
-    enum: ['male', 'female', 'other']
-  avgMark:
-    description: 'Contacts average mark. Should be between 1 and 12'
-    type: number
-    example: 9.7
-  onDuty:
-    description: 'Whether is contact on duty'
+    example: example@gmail.com
+  isFavourite:
+    description: 'isFavourite contact'
     type: boolean
     example: false
+  contactType:
+    description: 'Contacts contactType'
+    type: string
+    enum: ['male', 'female', 'other']
   parentId:
     description: 'Contacts parent id'
     type: string
