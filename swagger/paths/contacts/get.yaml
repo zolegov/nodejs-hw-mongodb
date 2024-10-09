@@ -39,11 +39,6 @@ parameters:
     schema:
       type: boolean
       example: false
-  - in: query
-    name: userId
-    schema:
-      type: string
-      example: 66f6914f82be3756eee5be97
 responses:
   '200':
     description: Successfully found contacts!
